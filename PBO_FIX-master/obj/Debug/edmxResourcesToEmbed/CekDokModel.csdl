@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AkunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Akun">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TanggalLahir" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Alamat" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AkunPenyakits" Relationship="Self.FK_AkunPenyakit_ToAkun" FromRole="Akun" ToRole="AkunPenyakit" />
+    <Property Name="JenisKelamin" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AkunPenyakit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPenyakit" Type="Int32" />
+    <Property Name="IdAkun" Type="Int32" />
+    <NavigationProperty Name="Akun" Relationship="Self.FK_AkunPenyakit_ToAkun" FromRole="AkunPenyakit" ToRole="Akun" />
+    <NavigationProperty Name="Penyakit" Relationship="Self.FK_AkunPenyakit_ToPenyakit" FromRole="AkunPenyakit" ToRole="Penyakit" />
+    <Property Name="LamaSakit" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="DeskripsiKeluhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Penyakit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="AkunPenyakits" Relationship="Self.FK_AkunPenyakit_ToPenyakit" FromRole="Penyakit" ToRole="AkunPenyakit" />
+    <Property Name="NamaPenyakit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_AkunPenyakit_ToAkun">
+    <End Role="Akun" Type="Self.Akun" Multiplicity="0..1" />
+    <End Role="AkunPenyakit" Type="Self.AkunPenyakit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Akun">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AkunPenyakit">
+        <PropertyRef Name="IdAkun" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AkunPenyakit_ToPenyakit">
+    <End Role="Penyakit" Type="Self.Penyakit" Multiplicity="0..1" />
+    <End Role="AkunPenyakit" Type="Self.AkunPenyakit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Penyakit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AkunPenyakit">
+        <PropertyRef Name="IdPenyakit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CekDokEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Akuns" EntityType="Self.Akun" />
+    <EntitySet Name="AkunPenyakits" EntityType="Self.AkunPenyakit" />
+    <EntitySet Name="Penyakits" EntityType="Self.Penyakit" />
+    <AssociationSet Name="FK_AkunPenyakit_ToAkun" Association="Self.FK_AkunPenyakit_ToAkun">
+      <End Role="Akun" EntitySet="Akuns" />
+      <End Role="AkunPenyakit" EntitySet="AkunPenyakits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AkunPenyakit_ToPenyakit" Association="Self.FK_AkunPenyakit_ToPenyakit">
+      <End Role="Penyakit" EntitySet="Penyakits" />
+      <End Role="AkunPenyakit" EntitySet="AkunPenyakits" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

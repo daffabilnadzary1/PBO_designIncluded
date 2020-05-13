@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AkunModelStoreContainer" CdmEntityContainer="CekDokEntities">
+    <EntitySetMapping Name="Akuns">
+      <EntityTypeMapping TypeName="AkunModel.Akun">
+        <MappingFragment StoreEntitySet="Akun">
+          <ScalarProperty Name="JenisKelamin" ColumnName="JenisKelamin" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nama" ColumnName="Nama" />
+          <ScalarProperty Name="TanggalLahir" ColumnName="TanggalLahir" />
+          <ScalarProperty Name="Alamat" ColumnName="Alamat" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AkunPenyakits">
+      <EntityTypeMapping TypeName="AkunModel.AkunPenyakit">
+        <MappingFragment StoreEntitySet="AkunPenyakit">
+          <ScalarProperty Name="DeskripsiKeluhan" ColumnName="DeskripsiKeluhan" />
+          <ScalarProperty Name="LamaSakit" ColumnName="LamaSakit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdPenyakit" ColumnName="IdPenyakit" />
+          <ScalarProperty Name="IdAkun" ColumnName="IdAkun" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Penyakits">
+      <EntityTypeMapping TypeName="AkunModel.Penyakit">
+        <MappingFragment StoreEntitySet="Penyakit">
+          <ScalarProperty Name="NamaPenyakit" ColumnName="NamaPenyakit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

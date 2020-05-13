@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AkunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Akun">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nama" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TanggalLahir" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Alamat" Type="nchar" MaxLength="200" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="JenisKelamin" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="AkunPenyakit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPenyakit" Type="int" />
+    <Property Name="IdAkun" Type="int" />
+    <Property Name="LamaSakit" Type="nchar" MaxLength="20" />
+    <Property Name="DeskripsiKeluhan" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Penyakit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NamaPenyakit" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_AkunPenyakit_ToAkun">
+    <End Role="Akun" Type="Self.Akun" Multiplicity="0..1" />
+    <End Role="AkunPenyakit" Type="Self.AkunPenyakit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Akun">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AkunPenyakit">
+        <PropertyRef Name="IdAkun" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AkunPenyakit_ToPenyakit">
+    <End Role="Penyakit" Type="Self.Penyakit" Multiplicity="0..1" />
+    <End Role="AkunPenyakit" Type="Self.AkunPenyakit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Penyakit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AkunPenyakit">
+        <PropertyRef Name="IdPenyakit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AkunModelStoreContainer">
+    <EntitySet Name="Akun" EntityType="Self.Akun" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AkunPenyakit" EntityType="Self.AkunPenyakit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Penyakit" EntityType="Self.Penyakit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AkunPenyakit_ToAkun" Association="Self.FK_AkunPenyakit_ToAkun">
+      <End Role="Akun" EntitySet="Akun" />
+      <End Role="AkunPenyakit" EntitySet="AkunPenyakit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AkunPenyakit_ToPenyakit" Association="Self.FK_AkunPenyakit_ToPenyakit">
+      <End Role="Penyakit" EntitySet="Penyakit" />
+      <End Role="AkunPenyakit" EntitySet="AkunPenyakit" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
